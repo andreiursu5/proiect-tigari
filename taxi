@@ -1,0 +1,210 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct pachet
+{
+    string nume;
+    double pret;
+};
+struct pachet pachete[256];
+
+int numarPachete = 0;
+
+void AdaugaPachet();
+void SortarePachete();
+void SortarePacheteAlfabetic();
+void ModificaPachet();
+void AfiseazaPachetele();
+
+int main()
+{
+    system("clear");
+    while (true)
+    {
+        int optiune = 0;
+        cout << "1. Adauga pachet.\n2. Modifica pachet.\n3. Afiseaza pochetele." << endl;
+        cin >> optiune;
+        switch (optiune)
+        {
+        case 1:
+            system("clear");
+            optiune = 0;
+            AdaugaPachet();
+            break;
+        case 2:
+            system("clear");
+            optiune = 0;
+            ModificaPachet();
+            break;
+        case 3:
+            system("clear");
+            optiune = 0;
+            AfiseazaPachetele();
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+void AdaugaPachet()
+{
+    string nume;
+    double pret;
+    cout << "Numele pachetului: ";
+    getline(cin, nume);
+    getline(cin, nume);
+    system("clear");
+    cout << "Pretul pachetului: ";
+    cin >> pret;
+    system("clear");
+    pachete[numarPachete].nume = nume;
+    pachete[numarPachete].pret = pret;
+    numarPachete++;
+}
+
+void SortarePachete()
+{
+    for (int i = 0; i < numarPachete; i++)
+    {
+        for (int j = i + 1; j < numarPachete; j++)
+        {
+            if (pachete[i].pret > pachete[j].pret)
+            {
+                pachete[255].nume = pachete[i].nume;
+                pachete[255].pret = pachete[i].pret;
+
+                pachete[i].nume = pachete[j].nume;
+                pachete[i].pret = pachete[j].pret;
+
+                pachete[j].nume = pachete[255].nume;
+                pachete[j].pret = pachete[255].pret;
+            }
+        }
+    }
+}
+
+void ModificaPachet()
+{
+    int optiunePachet, optiuneModificare;
+    cout << "Alege pachetul: ";
+    cin >> optiunePachet;
+    system("clear");
+    cout << "1. Modifica numele\n2. Modifica pretul" << endl;
+    cin >> optiuneModificare;
+    system("clear");
+    if (optiuneModificare == 1)
+    {
+        string nume;
+        cout << "Numele nou al pachetului (" << pachete[optiunePachet - 1].nume << " - " << pachete[optiunePachet - 1].pret << "): ";
+        getline(cin, nume);
+        getline(cin, nume);
+        pachete[optiunePachet - 1].nume = nume;
+        system("clear");
+    }
+    if (optiuneModificare == 2)
+    {
+        int pret;
+        cout << "Pretul nou al pachetului (" << pachete[optiunePachet - 1].nume << " - " << pachete[optiunePachet - 1].pret << "): ";
+        cin >> pret;
+        pachete[optiunePachet - 1].pret = pret;
+        system("clear");
+    }
+}
+
+void AfiseazaPachetele()
+{
+    int optiune;
+    SortarePachete();
+    cout << "1. Dupa pret.\n2. Dupa nume." << endl;
+    cin >> optiune;
+    if (optiune == 1)
+    {
+        system("clear");
+        SortarePachete();
+        cout << "1. Crescator\n2. Descrescator" << endl;
+        int optiuneSortare;
+        cin >> optiuneSortare;
+        if (optiuneSortare == 1)
+        {
+            system("clear");
+            for (int i = 0; i < numarPachete; i++)
+            {
+                cout << i + 1 << ": " << pachete[i].nume << " - " << pachete[i].pret << " RON" << endl;
+            }
+        }
+        else if (optiuneSortare == 2)
+        {
+            if (numarPachete == 0)
+            {
+            }
+            else
+            {
+                system("clear");
+                for (int i = numarPachete - 1; i >= 0; i--)
+                {
+                    cout << numarPachete - i << ": " << pachete[i].nume << " - " << pachete[i].pret << " RON" << endl;
+                }
+            }
+        }
+    }
+    else if (optiune == 2)
+    {
+        system("clear");
+        SortarePacheteAlfabetic();
+        cout << "1. A - Z\n2. Z - A" << endl;
+        int optiuneSortare;
+        cin >> optiuneSortare;
+        if (optiuneSortare == 1)
+        {
+            system("clear");
+            for (int i = 0; i < numarPachete; i++)
+            {
+                cout << i + 1 << ": " << pachete[i].nume << " - " << pachete[i].pret << " RON" << endl;
+            }
+        }
+        else if (optiuneSortare == 2)
+        {
+            if (numarPachete == 0)
+            {
+            }
+            else
+            {
+                system("clear");
+                for (int i = numarPachete - 1; i >= 0; i--)
+                {
+                    cout << numarPachete - i << ": " << pachete[i].nume << " - " << pachete[i].pret << " RON" << endl;
+                }
+            }
+        }
+    }
+    cout << endl;
+}
+
+void SortarePacheteAlfabetic()
+{
+    for (int i = 0; i < numarPachete; i++)
+    {
+        for (int j = i + 1; j < numarPachete; j++)
+        {
+            int pachetI = (int)pachete[i].nume[0];
+            if (97 <= pachetI && pachetI <= 122)
+                pachetI -= 32;
+            int pachetJ = (int)pachete[j].nume[0];
+            if (97 <= pachetJ && pachetJ <= 122)
+                pachetI -= 32;
+            if (pachetI < pachetJ)
+            {
+                pachete[255].nume = pachete[i].nume;
+                pachete[255].pret = pachete[i].pret;
+
+                pachete[i].nume = pachete[j].nume;
+                pachete[i].pret = pachete[j].pret;
+
+                pachete[j].nume = pachete[255].nume;
+                pachete[j].pret = pachete[255].pret;
+            }
+        }
+    }
+}
